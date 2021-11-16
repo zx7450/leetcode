@@ -1,4 +1,4 @@
-package 动态规划.分割等和子集;
+package 动态规划.背包问题.零一背包相关问题.分割等和子集;
 
 public class Quiz416 {
     public boolean canPartition(int[] nums) {

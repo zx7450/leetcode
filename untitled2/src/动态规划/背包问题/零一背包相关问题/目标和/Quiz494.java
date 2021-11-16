@@ -1,4 +1,4 @@
-package 动态规划.目标和;
+package 动态规划.背包问题.零一背包相关问题.目标和;
 
 public class Quiz494 {
 //    int res = 0;//回溯法

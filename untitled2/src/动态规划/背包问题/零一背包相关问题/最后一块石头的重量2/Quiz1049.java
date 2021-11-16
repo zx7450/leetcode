@@ -1,4 +1,4 @@
-package 动态规划.最后一块石头的重量2;
+package 动态规划.背包问题.零一背包相关问题.最后一块石头的重量2;
 
 public class Quiz1049 {
     public int lastStoneWeightII(int[] stones) {

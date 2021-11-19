@@ -1,4 +1,4 @@
-package 贪心算法.买卖股票的最佳时机;
+package 贪心算法.买卖股票的最佳时机2;
 
 /**
  * @author zx

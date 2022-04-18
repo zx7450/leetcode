@@ -17,35 +17,24 @@ class TreeNode {
 }
 
 public class Quiz04_05 {
-    //    public boolean isValidBST(TreeNode root) {//中序遍历法
-//        if (root==null||(root.left==null&&root.right==null))
-//            return true;
-//        Stack<TreeNode> treeNodeStack=new Stack<>();
-//        TreeNode curr=root;
-//        double pre=-Double.MAX_VALUE;
-//        while (!treeNodeStack.isEmpty()||curr!=null) {
-//            if (curr!=null) {
-//                treeNodeStack.push(curr);
-//                curr = curr.left;
-//            } else {
-//                curr=treeNodeStack.pop();
-//                if (pre>=curr.val)
-//                    return false;
-//                pre=curr.val;
-//                curr=curr.right;
-//            }
-//        }
-//        return true;
-//    }
-    public boolean isValidBST(TreeNode root) {
-        if (root==null)
+    public boolean isValidBST(TreeNode root) {//中序遍历法
+        if (root == null || (root.left == null && root.right == null))
             return true;
-        else if (root.val<root.left.val)
-    }
-
-    public boolean judgeBST(TreeNode root,int low,int high) {
-        if (root==null)
-            return true;
-        if (root.left!=null)
+        Stack<TreeNode> treeNodeStack = new Stack<>();
+        TreeNode curr = root;
+        double pre = -Double.MAX_VALUE;
+        while (!treeNodeStack.isEmpty() || curr != null) {
+            if (curr != null) {
+                treeNodeStack.push(curr);
+                curr = curr.left;
+            } else {
+                curr = treeNodeStack.pop();
+                if (pre >= curr.val)
+                    return false;
+                pre = curr.val;
+                curr = curr.right;
+            }
+        }
+        return true;
     }
 }

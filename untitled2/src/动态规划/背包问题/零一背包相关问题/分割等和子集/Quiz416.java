@@ -2,21 +2,26 @@ package 动态规划.背包问题.零一背包相关问题.分割等和子集;
 
 public class Quiz416 {
     public boolean canPartition(int[] nums) {
-        int numsize=nums.length;
-        if (numsize<2)
+        int n = nums.length;
+        if (n == 1)
             return false;
-        int allsum=0;
-        for (int i = 0; i < numsize; i++) {
-            allsum+=nums[i];
+        else if (n == 2)
+            return nums[0] == nums[1];
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
         }
-        if (allsum%2==1)
+        if (sum % 2 != 0)
             return false;
-        int sum=allsum/2;
-        int[] dp=new int[sum+1];
-        for (int i = 0; i < numsize; i++) {
-            for (int j=sum;j>=nums[i];j--)
-                dp[j]=Math.max(dp[j],dp[j-nums[i]]+nums[i]);
+        sum /= 2;
+        int[] dp = new int[sum + 1];
+        for (int i = 0; i < n; i++) {
+            for (int j = sum; j >= nums[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
+            }
+            if (dp[sum] == sum)
+                return true;
         }
-        return dp[sum]==sum;
+        return false;
     }
 }

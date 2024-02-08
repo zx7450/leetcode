@@ -45,34 +45,35 @@ import java.util.Queue;
 //    }
 //}
 public class MyStack {//一个队列
-    Queue<Integer> simStack;
+    Queue<Integer> stackque;
+
     public MyStack() {
-        simStack=new LinkedList<Integer>();
+        stackque = new LinkedList<>();
     }
 
     public void push(int x) {
-        simStack.add(x);
+        stackque.add(x);
     }
 
     public int pop() {
-        int n=simStack.size();
-        for (int i = 0; i < n-1; i++)//将队头元素出队后重新加入队尾，循环结束后的元素就是要出栈的元素
-            simStack.add(simStack.poll());
-        return simStack.poll();
+        int n = stackque.size();
+        for (int i = 0; i < n - 1; i++) {
+            stackque.add(stackque.poll());
+        }
+        return stackque.poll();
     }
 
     public int top() {
-        int n=simStack.size();
-        for (int i = 0; i < n-1; i++)//将队头元素出队后重新加入队尾，循环结束后的元素就是栈顶元素
-            simStack.add(simStack.poll());
-        int ans=simStack.peek();
-        simStack.add(simStack.poll());
-        return ans;
+        int n = stackque.size();
+        for (int i = 0; i < n - 1; i++) {
+            stackque.add(stackque.poll());
+        }
+        int i = stackque.poll();
+        stackque.add(i);
+        return i;
     }
 
     public boolean empty() {
-        if (simStack.isEmpty()==true)
-            return true;
-        return false;
+        return stackque.isEmpty();
     }
 }

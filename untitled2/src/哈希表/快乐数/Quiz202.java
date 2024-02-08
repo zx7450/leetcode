@@ -5,24 +5,26 @@ import java.util.Set;
 
 public class Quiz202 {
     public boolean isHappy(int n) {
-        if (n==1)
+        if (n == 1)
             return true;
-        Set<Integer> happyset=new HashSet<Integer>();
-        while (happyset.contains(n)==false){
-            happyset.add(n);
-            n=getres(n);
-            if (n==1)
+        else if (n == 2 || n == 4)
+            return false;
+        Set<Integer> occ = new HashSet<>();
+        while (!occ.contains(n)) {
+            occ.add(n);
+            n = cal(n);
+            if (n == 1)
                 return true;
         }
         return false;
     }
-    public int getres(int num){
-        int sum=0;
-        int now=0;
-        while (num!=0){
-            now=num%10;
-            sum+=now*now;
-            num/=10;
+
+    public int cal(int n) {
+        int sum = 0;
+        while (n > 0) {
+            int cur = n % 10;
+            sum += cur * cur;
+            n /= 10;
         }
         return sum;
     }

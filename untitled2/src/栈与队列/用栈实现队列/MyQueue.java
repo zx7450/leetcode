@@ -3,36 +3,35 @@ package 栈与队列.用栈实现队列;
 import java.util.Stack;
 
 public class MyQueue {//第232题
-    Stack<Integer> simDeque;
-    Stack<Integer> temp;
+    Stack<Integer> instack;
+    Stack<Integer> outstack;
+
     public MyQueue() {
-        simDeque=new Stack<Integer>();
-        temp=new Stack<Integer>();
+        instack = new Stack<>();
+        outstack = new Stack<>();
     }
 
     public void push(int x) {
-        simDeque.push(x);
+        instack.push(x);
     }
 
     public int pop() {
-        while (simDeque.empty()==false)
-            temp.push(simDeque.pop());
-        int ans= temp.pop();
-        while (temp.empty()==false)
-            simDeque.push(temp.pop());
-        return ans;
+        if (outstack.empty()) {
+            while (!instack.empty())
+                outstack.push(instack.pop());
+        }
+        return outstack.pop();
     }
 
     public int peek() {
-        while (simDeque.empty()==false)
-            temp.push(simDeque.pop());
-        int ans=temp.peek();
-        while (temp.empty()==false)
-            simDeque.push(temp.pop());
-        return ans;
+        if (outstack.empty()) {
+            while (!instack.empty())
+                outstack.push(instack.pop());
+        }
+        return outstack.peek();
     }
 
     public boolean empty() {
-        return simDeque.empty();
+        return instack.empty() && outstack.empty();
     }
 }

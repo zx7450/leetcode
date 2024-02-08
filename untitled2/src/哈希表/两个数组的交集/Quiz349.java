@@ -1,34 +1,26 @@
 package 哈希表.两个数组的交集;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class Quiz349 {
     public int[] intersection(int[] nums1, int[] nums2) {
-        HashSet<Integer> setOfNum1=new HashSet<Integer>();
-        HashSet<Integer> setOfNum2=new HashSet<Integer>();
-        for (int i = 0; i < nums1.length; i++) {
-            setOfNum1.add(nums1[i]);
+        int l1 = nums1.length, l2 = nums2.length;
+        if (l1 == 0 || l2 == 0)
+            return new int[0];
+        Set<Integer> nums1set = new HashSet<>();
+        for (int i : nums1) {
+            if (nums1set.contains(i)) continue;
+            nums1set.add(i);
         }
-        for (int i = 0; i < nums2.length; i++) {
-            setOfNum2.add(nums2[i]);
+        List<Integer> ans = new ArrayList<>();
+        int i = 0;
+        while (i < l2 && !nums1set.isEmpty()) {
+            if (nums1set.contains(nums2[i])) {
+                ans.add(nums2[i]);
+                nums1set.remove(nums2[i]);
+            }
+            i++;
         }
-        return getintersection(setOfNum1,setOfNum2);
-    }
-    public int[] getintersection(HashSet<Integer> set1,HashSet<Integer> set2){
-        if (set1.size()>set2.size())
-            return getintersection(set2,set1);
-        HashSet<Integer> anstemp=new HashSet<Integer>();
-        for (int num:set1){
-            if (set2.contains(num))
-                anstemp.add(num);
-        }
-        int[] ans=new int[anstemp.size()];
-        int index=0;
-        for (int num:anstemp)
-            ans[index++]=num;
-        return ans;
+        return ans.stream().mapToInt(Integer::intValue).toArray();
     }
 }

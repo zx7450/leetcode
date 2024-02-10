@@ -1,43 +1,39 @@
 package 栈与队列.滑动窗口最大值;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.*;
 
-class MyQueue{
-    Deque<Integer> deque=new LinkedList<Integer>();
-    void poll(int val){//出栈
-        if (!deque.isEmpty()&&deque.peek()==val)
-            deque.poll();
-    }
-    void add(int val){
-        while (!deque.isEmpty()&&deque.getLast()<val)
-            deque.removeLast();
-        deque.add(val);
-    }
-    int peek(){
-        return deque.peek();
-    }
-}
 class Quiz239 {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        if (k == 1)
+        int n = nums.length;
+        if (n == 1)
             return nums;
-        int len = nums.length;
-        MyQueue myQueue=new MyQueue();
-        for (int i = 0; i < k; i++) {
-            myQueue.add(nums[i]);
+        else if (k == 1)
+            return nums;
+        int l = 0, r = k - 1;
+        Deque<Integer> maxVal = new ArrayDeque<>();
+        //处理第一个窗口
+        for (int i = 0; i <= r; i++) {
+            if (!maxVal.isEmpty()) {
+                if (maxVal.peekLast() < nums[i])
+                    while (!maxVal.isEmpty() && maxVal.peekLast() < nums[i]) {
+                        maxVal.pollLast();
+                    }
+            }
+            maxVal.addLast(nums[i]);
         }
-        int[] ans=new int[len-k+1];
-        int anslocat=0;
-        ans[anslocat++]=myQueue.peek();
-        int i=1,j=k;
-        while (j<len){
-            myQueue.poll(nums[i-1]);
-            myQueue.add(nums[j]);
-            j++;
-            i++;
-            ans[anslocat++]=myQueue.peek();
+        List<Integer> ans = new ArrayList<>();
+        ans.add(maxVal.peekFirst());
+        while (r < n - 1) {
+            if (nums[l++] == maxVal.peekFirst())
+                maxVal.pollFirst();
+            r++;
+            if (maxVal.peekLast() < nums[r]) {
+                while (!maxVal.isEmpty() && maxVal.peekLast() < nums[r])
+                    maxVal.pollLast();
+            }
+            maxVal.addLast(nums[r]);
+            ans.add(maxVal.peekFirst());
         }
-        return ans;
+        return ans.stream().mapToInt(Integer::intValue).toArray();
     }
 }

@@ -6,17 +6,20 @@ package 贪心算法.跳跃游戏2;
  */
 public class Quiz45 {
     public int jump(int[] nums) {
-        int length = nums.length;
-        int end = 0;//代表次数之内的最大距离，当i超过这个距离时说明需要加一次了
-        int maxPosition = 0;
-        int steps = 0;
-        for (int i = 0; i < length - 1; i++) {
-            maxPosition = Math.max(maxPosition, i + nums[i]);
-            if (i == end) {
-                end = maxPosition;
-                steps++;
+        int n = nums.length;
+        if (n == 1)
+            return 0;
+        else if (n == 2)
+            return 1;
+        int currRange = 0, maxRange = 0, i = 0, step = 0;
+        while (i < n - 1) {
+            maxRange = Math.max(maxRange, nums[i] + i);
+            if (i == currRange) {
+                step++;
+                currRange = maxRange;
             }
+            i++;
         }
-        return steps;
+        return step + 1;
     }
 }

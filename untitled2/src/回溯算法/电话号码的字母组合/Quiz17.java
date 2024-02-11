@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Quiz17 {
-    String[] letterMap = {
+    final String[] letterMap = {
             "", // 0
             "", // 1
             "abc", // 2
@@ -16,24 +16,31 @@ public class Quiz17 {
             "tuv", // 8
             "wxyz", // 9
     };
-    StringBuilder stringBuilder=new StringBuilder();
-    List<String> result=new ArrayList<String>();
+    List<String> ans;
+    StringBuilder path;
+
+    int n;
+
     public List<String> letterCombinations(String digits) {
-        if (digits.length()==0)
-            return result;
-        backtracing(digits,0);
-        return result;
+        ans = new ArrayList<>();
+        n = digits.length();
+        if (n == 0)
+            return ans;
+        path = new StringBuilder();
+        backtracing(digits, 0);
+        return ans;
     }
-    public void backtracing(String digits,int position) {
-        if (position==digits.length()) {
-            result.add(stringBuilder.toString());
+
+    public void backtracing(String digits, int flag) {
+        if (flag == n) {
+            ans.add(path.toString());
             return;
         }
-        int flag=digits.charAt(position)-'0';
-        for (int i = 0; i < letterMap[flag].length(); i++) {
-            stringBuilder.append(letterMap[flag].charAt(i));
-            backtracing(digits,position+1);
-            stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        int num = digits.charAt(flag) - '0';
+        for (int i = 0; i < letterMap[num].length(); i++) {
+            path.append(letterMap[num].charAt(i));
+            backtracing(digits, flag + 1);
+            path.deleteCharAt(path.length() - 1);
         }
     }
 }

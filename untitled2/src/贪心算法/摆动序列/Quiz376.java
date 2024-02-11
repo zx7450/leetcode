@@ -6,32 +6,35 @@ package 贪心算法.摆动序列;
  */
 public class Quiz376 {
     public int wiggleMaxLength(int[] nums) {
-        if (nums.length==1)
+        int n = nums.length;
+        if (n == 1)
             return 1;
-        int maxlength=1;
-        boolean posflag=true;
-        boolean firststart=true;
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i]==nums[i-1])
-                continue;
-            else {
-                if (firststart==true) {
-                    posflag = nums[i] > nums[i - 1] ? true : false;
+        else if (n == 2)
+            return nums[0] == nums[1] ? 1 : 2;
+        int ans = 0;
+        boolean isPos = true;
+        boolean firststart = true;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] > nums[i - 1]) {
+                if (firststart) {
+                    isPos = true;
                     firststart = false;
-                    maxlength++;
+                    ans++;
+                } else if (!isPos) {
+                    isPos = true;
+                    ans++;
                 }
-                else {
-                    if (nums[i]>nums[i-1]&&posflag==false) {
-                        maxlength++;
-                        posflag=true;
-                    } else if (nums[i]<nums[i-1]&&posflag==true) {
-                        maxlength++;
-                        posflag=false;
-                    } else
-                        continue;
+            } else if (nums[i] < nums[i - 1]) {
+                if (firststart) {
+                    isPos = false;
+                    firststart = false;
+                    ans++;
+                } else if (isPos) {
+                    isPos = false;
+                    ans++;
                 }
             }
         }
-        return maxlength;
+        return ans + 1;
     }
 }

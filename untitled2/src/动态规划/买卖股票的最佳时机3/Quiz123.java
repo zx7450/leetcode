@@ -2,18 +2,20 @@ package 动态规划.买卖股票的最佳时机3;
 
 public class Quiz123 {
     public int maxProfit(int[] prices) {
-        int prilen=prices.length;
-        if (prilen==1)
+        int n = prices.length;
+        if (n == 1)
             return 0;
-        int[][] dp=new int[prilen][5];//后一个下标，0代表未进行过任何买卖，1代表进行过第一次买入，2代表进行过第一次卖出...以此类推
-        dp[0][1]=-prices[0];
-        dp[0][3]=-prices[0];//第二次买入依赖于第一次卖出的状态，其实相当于第0天第一次买入了，第一次卖出了，然后在买入一次
-        for (int i = 1; i < prilen; i++) {//dp[i-1][0]始终为0，无意义
-            dp[i][1]=Math.max(dp[i-1][1],-prices[i]);
-            dp[i][2]=Math.max(dp[i-1][2],dp[i-1][1]+prices[i]);
-            dp[i][3]=Math.max(dp[i-1][3],dp[i-1][2]-prices[i]);
-            dp[i][4]=Math.max(dp[i-1][4],dp[i-1][3]+prices[i]);
+        else if (n == 2)
+            return prices[1] > prices[0] ? prices[1] - prices[0] : 0;
+        int[][] dp = new int[n][4];
+        dp[0][0] = -prices[0];
+        dp[0][2] = -prices[0];
+        for (int i = 1; i < n; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], -prices[i]);
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i]);
+            dp[i][2] = Math.max(dp[i - 1][2], dp[i - 1][1] - prices[i]);
+            dp[i][3] = Math.max(dp[i - 1][3], dp[i - 1][2] + prices[i]);
         }
-        return dp[prilen-1][4];
+        return dp[n - 1][3];
     }
 }

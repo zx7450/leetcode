@@ -8,25 +8,22 @@ import java.util.Arrays;
  */
 public class Quiz300 {
     public int lengthOfLIS(int[] nums) {
-        int numlen=nums.length;
-        if (numlen==1)
+        int n = nums.length;
+        if (n == 1)
             return 1;
-        else if (numlen==2)
-            if (nums[0]>=nums[1])
-                return 1;
-            else
-                return 2;
-        int[] dp=new int[numlen];
-        Arrays.fill(dp,1);//每个位置开始的子序列最小长度应该为1（它本身）
-        int res=0;
-        for (int i = 1; i < numlen; i++) {
+        else if (n == 2)
+            return nums[1] > nums[0] ? 2 : 1;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
-                if (nums[j]<nums[i])
-                    dp[i]=Math.max(dp[i],dp[j]+1);
+                if (nums[i] > nums[j])
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
             }
-            if (dp[i]>res)
-                res=dp[i];
+            if (dp[i] > ans)
+                ans = dp[i];
         }
-        return res;
+        return ans;
     }
 }

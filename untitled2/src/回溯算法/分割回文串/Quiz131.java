@@ -4,38 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Quiz131 {
-    List<String> path=new ArrayList<>();
-    List<List<String>> result=new ArrayList<>();
+    List<String> path;
+    List<List<String>> result;
+    int n;
+
     public List<List<String>> partition(String s) {
-        if (s.length()==1){
+        path = new ArrayList<>();
+        result = new ArrayList<>();
+        n = s.length();
+        if (n == 1) {
             path.add(s);
             result.add(new ArrayList<>(path));
             return result;
         }
-        backtracing(s,0);
+        backtracing(s, 0);
         return result;
     }
-    public void backtracing(String s,int startpos){
-        if (startpos>=s.length()){// 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了
+
+    public void backtracing(String s, int l) {
+        if (l == n) {
             result.add(new ArrayList<>(path));
             return;
         }
-        for (int i = startpos; i < s.length(); i++) {
-            if (isPartition(s,startpos,i)){
-                path.add(s.substring(startpos,i+1));
-                backtracing(s,i+1);
-                path.remove(path.size()-1);
-            } else
-                continue;
+        for (int i = l; i < n; i++) {
+            if (check(s, l, i)) {
+                path.add(s.substring(l, i + 1));
+                backtracing(s, i + 1);
+                path.remove(path.size() - 1);
+            }
         }
     }
-    public boolean isPartition(String s,int begin,int end){
-        while (begin<end){
-            if (s.charAt(begin)!=s.charAt(end))
+
+    public boolean check(String s, int l, int r) {
+        if (l == r)
+            return true;
+        while (l < r) {
+            if (s.charAt(l++) != s.charAt(r--))
                 return false;
-            begin++;
-            end--;
         }
         return true;
     }
+
 }

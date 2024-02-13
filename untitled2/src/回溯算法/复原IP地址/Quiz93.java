@@ -4,41 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Quiz93 {
-    List<String> ans=new ArrayList<>();
+    List<String> ans;
+
     public List<String> restoreIpAddresses(String s) {
-        if (s.length()>12)
+        ans = new ArrayList<>();
+        if (s.length() > 12)
             return ans;
-        turnToIP(s,0,0);
+        turnToIP(s, 0, 0);
         return ans;
     }
-    public void turnToIP(String s,int startpos,int segnum) {
-        if (segnum==3) {//分段数为3，判断最后一段是否合法即可
-            if (isValid(s,startpos,s.length()-1))
+
+    public void turnToIP(String s, int flag, int segnum) {
+        if (flag == s.length())
+            return;
+        if (segnum == 3) {
+            if (check(s, flag, s.length() - 1)) {
                 ans.add(s);
+            }
             return;
         }
-        for (int i = startpos; i < s.length(); i++) {
-            if (isValid(s,startpos,i)) {
-                s = s.substring(0, i + 1) + "." + s.substring(i + 1);//在str的后⾯插⼊⼀个逗点
-                turnToIP(s, i + 2, segnum + 1);// 插⼊逗点之后下⼀个⼦串的起始位置为i+2
+        for (int i = flag; i < s.length() && i - flag + 1 <= 3; i++) {
+            if (check(s, flag, i)) {
+                s = s.substring(0, i + 1) + "." + s.substring(i + 1);
+                turnToIP(s, i + 2, segnum + 1);
                 s = s.substring(0, i + 1) + s.substring(i + 2);
             }
-            else
-                break;
         }
     }
-    public boolean isValid(String s,int begin,int end){
-        if (begin>end)
+
+    public boolean check(String s, int l, int r) {
+        if (l == r)
+            return true;
+        else if (s.charAt(l) == '0')
             return false;
-        if (s.charAt(begin)=='0'&&begin!=end)//以0开头且位数不为1
-            return false;
-        int num=0;
-        while (begin<=end){
-            num=num*10+(s.charAt(begin)-'0');
-            if (num>255)
-                return false;
-            begin++;
-        }
-        return true;
+        int i = Integer.parseInt(s.substring(l, r + 1));
+        return i <= 255;
     }
 }

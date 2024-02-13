@@ -9,15 +9,23 @@ import java.util.Queue;
  * @date 2021/11/06 15:21
  */
 public class Quiz406 {
-    public int[][] reconstructQueue(int[][] people) {
+    public static int[][] reconstructQueue(int[][] people) {
         // 身高从大到小排（身高相同k小的站前面）
         Arrays.sort(people, (a, b) -> {
             if (a[0] == b[0]) return a[1] - b[1];
             return b[0] - a[0];
         });
-        LinkedList<int[]> queue=new LinkedList<>();
-        for (int[] temp:people)
-            queue.add(temp[1],temp);//当我们放入第 i 个人时，只需要将其插入队列中，使得他的前面恰好有temp[1]个人即可。
-        return queue.toArray(new int[people.length][2]);
+        LinkedList<int[]> que = new LinkedList<>();
+
+        for (int[] p : people) {
+            que.add(p[1], p);   //Linkedlist.add(index, value)，會將value插入到指定index裡。
+        }
+
+        return que.toArray(new int[people.length][]);
+    }
+
+    public static void main(String[] args) {
+        int[][] people = new int[][]{{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2}};
+        System.out.println(reconstructQueue(people));
     }
 }

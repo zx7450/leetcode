@@ -6,17 +6,30 @@ package 动态规划.最大子序和;
  */
 public class Quiz53 {
     public int maxSubArray(int[] nums) {
-        int numlen=nums.length;
-        if (numlen==1)
+        int n = nums.length;
+        if (n == 1)
             return nums[0];
-        int[] dp=new int[numlen];
-        dp[0]=nums[0];
-        int res=dp[0];
-        for (int i = 1; i < numlen; i++) {
-            dp[i]=Math.max(dp[i-1]+nums[i],nums[i]);
-            if (dp[i]>res)
-                res=dp[i];
+        else if (n == 2) {
+            if (nums[0] > 0 && nums[1] > 0)
+                return nums[0] + nums[1];
+            else if (nums[0] <= 0 && nums[1] <= 0)
+                return Math.max(nums[0], nums[1]);
+            else if (nums[0] > 0)
+                return nums[0];
+            else
+                return nums[1];
         }
-        return res;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        int ans = nums[0];
+        for (int i = 1; i < n; i++) {
+            if (dp[i - 1] > 0)
+                dp[i] = dp[i - 1] + nums[i];
+            else
+                dp[i] = nums[i];
+            if (dp[i] > ans)
+                ans = dp[i];
+        }
+        return ans;
     }
 }

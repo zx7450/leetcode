@@ -5,23 +5,29 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Quiz90 {
-    List<List<Integer>> result=new ArrayList<>();
-    List<Integer> path=new ArrayList<>();
+    List<List<Integer>> ans;
+    List<Integer> path;
+    int n;
+
     public List<List<Integer>> subsetsWithDup(int[] nums) {
+        ans = new ArrayList<>();
+        path = new ArrayList<>();
+        n = nums.length;
         Arrays.sort(nums);
-        backtracing(nums,0);
-        return result;
+        backtracing(nums, 0);
+        return ans;
     }
-    public void backtracing(int[] nums,int startpos){
-        result.add(new ArrayList<>(path));
-        if (startpos==nums.length)
+
+    private void backtracing(int[] nums, int flag) {
+        ans.add(new ArrayList<>(path));
+        if (flag == n)
             return;
-        for (int i = startpos; i < nums.length; i++) {
-            if (i>startpos&&nums[i]==nums[i-1])//i比开始位置大说明已经不是第一次遍历，此时若本位置值与前一位置的相等则应该去重，直接进入下一步
+        for (int i = flag; i < n; i++) {
+            if (i != flag && nums[i] == nums[i - 1])
                 continue;
             path.add(nums[i]);
-            backtracing(nums,i+1);
-            path.remove(path.size()-1);
+            backtracing(nums, i + 1);
+            path.remove(path.size() - 1);
         }
     }
 }

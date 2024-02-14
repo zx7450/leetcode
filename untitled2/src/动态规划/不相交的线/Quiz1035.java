@@ -6,19 +6,23 @@ package 动态规划.不相交的线;
  */
 public class Quiz1035 {
     public int maxUncrossedLines(int[] nums1, int[] nums2) {
-        int n1len=nums1.length;
-        int n2len=nums2.length;
-        int[][] dp=new int[n1len+1][n2len+1];
-        for (int i = 1; i <= n1len; i++) {
-            int n1=nums1[i-1];
-            for (int j = 1; j <= n2len; j++) {
-                int n2=nums2[j-1];
-                if (n1==n2)
-                    dp[i][j]=dp[i-1][j-1]+1;
-                else
-                    dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+        int l1 = nums1.length;
+        int l2 = nums2.length;
+        int[][] dp = new int[l1][l2];
+        for (int i = 0; i < l1; i++) {
+            for (int j = 0; j < l2; j++) {
+                if (nums1[i] == nums2[j])
+                    dp[i][j] = (i == 0 || j == 0) ? 1 : dp[i - 1][j - 1] + 1;
+                else {
+                    if (i > 0 && j > 0)
+                        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                    else if (i > 0)
+                        dp[i][j] = dp[i - 1][j];
+                    else if (j > 0)
+                        dp[i][j] = dp[i][j - 1];
+                }
             }
         }
-        return dp[n1len][n2len];
+        return dp[l1 - 1][l2 - 1];
     }
 }

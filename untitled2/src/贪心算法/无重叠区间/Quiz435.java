@@ -8,21 +8,19 @@ import java.util.Arrays;
  */
 public class Quiz435 {
     public int eraseOverlapIntervals(int[][] intervals) {
-        int n=intervals.length;
-        if (n<2)
+        int n = intervals.length;
+        if (n < 2)
             return 0;
-        Arrays.sort(intervals, (a, b) -> {
-            if (a[1] != b[1]) return a[1] - b[1];
-            return a[0] - b[0];
-        });
-        int preend=intervals[0][1];
-        int count=1;//记录非重叠子区间数目
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        int right = intervals[0][1];
+        int ans = 0;
         for (int i = 1; i < n; i++) {
-            if (intervals[i][0]>=preend) {
-                preend=intervals[i][1];
-                count++;
-            }
+            if (right > intervals[i][0]) {
+                ans++;
+                right = Math.min(right, intervals[i][1]);
+            } else
+                right = intervals[i][1];
         }
-        return n-count;//子区间总数减去非重叠子区间数目即为需要删除的区间数
+        return ans;
     }
 }

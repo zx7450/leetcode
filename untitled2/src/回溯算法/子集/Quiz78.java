@@ -4,20 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Quiz78 {
-    List<List<Integer>> result=new ArrayList<>();
-    List<Integer> path=new ArrayList<>();
+    List<List<Integer>> ans;
+    List<Integer> path;
+    int n;
+
     public List<List<Integer>> subsets(int[] nums) {
-        backtracing(nums,0);
-        return result;
+        ans = new ArrayList<>();
+        path = new ArrayList<>();
+        n = nums.length;
+        backtracing(nums, 0);
+        return ans;
     }
-    public void backtracing(int[] nums,int startindex) {
-        result.add(new ArrayList<>(path));
-        if (startindex==nums.length)
+
+    private void backtracing(int[] nums, int flag) {
+        ans.add(new ArrayList<>(path));
+        if (flag == n)
             return;
-        for (int i = startindex; i < nums.length; i++) {
+        for (int i = flag; i < n; i++) {
             path.add(nums[i]);
-            backtracing(nums,i+1);
-            path.remove(path.size()-1);
+            backtracing(nums, i + 1);
+            path.remove(path.size() - 1);
         }
     }
 }

@@ -1,7 +1,5 @@
 package 二叉树.N叉树的后序遍历;
 
-import 二叉树.后序遍历.TreeNode;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

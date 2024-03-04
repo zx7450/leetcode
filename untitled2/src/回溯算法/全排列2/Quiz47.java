@@ -7,35 +7,39 @@ import java.util.*;
  * @date 2021/11/01 9:12
  */
 public class Quiz47 {
-    List<List<Integer>> result=new ArrayList<>();
-    List<Integer> path=new ArrayList<>();
-    boolean[] used;
-    public List<List<Integer>> permuteUnique(int[] nums) {
-        if (nums.length==1) {
-            path.add(nums[0]);
-            result.add(new ArrayList<>(path));
-            return result;
-        }
-        used=new boolean[nums.length];
+    static List<List<Integer>> ans;
+    static List<Integer> path;
+    static boolean[] used;
+    static int n;
+
+    public static List<List<Integer>> permuteUnique(int[] nums) {
+        ans = new ArrayList<>();
+        path = new ArrayList<>();
+        n = nums.length;
+        used = new boolean[n];
         Arrays.sort(nums);
         backtracing(nums);
-        return result;
+        return ans;
     }
-    public void backtracing(int[] nums) {
-        if (path.size()==nums.length) {
-            result.add(new ArrayList<>(path));
+
+    private static void backtracing(int[] nums) {
+        if (path.size() == n) {
+            ans.add(new ArrayList<>(path));
             return;
         }
-        for (int i = 0; i < nums.length; i++) {
-            if (i>0&&used[i-1]==false&&nums[i]==nums[i-1])
+        for (int i = 0; i < n; i++) {
+            if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]))
                 continue;
-            if (used[i]==false) {
-                path.add(nums[i]);
-                used[i] = true;
-                backtracing(nums);
-                path.remove(path.size() - 1);
-                used[i] = false;
-            }
+            path.add(nums[i]);
+            used[i] = true;
+            backtracing(nums);
+            used[i] = false;
+            path.remove(path.size() - 1);
         }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{1, 1, 2};
+        System.out.println(permuteUnique(nums));
     }
 }
